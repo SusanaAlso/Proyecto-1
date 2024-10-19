@@ -1,0 +1,90 @@
+INICIO
+
+FUNCION esPrimo(numero)
+    SI numero <= 1 ENTONCES
+        RETORNAR FALSO
+    FIN SI
+    PARA i DESDE 2 HASTA raiz(numero) HACER
+        SI numero MOD i == 0 ENTONCES
+            RETORNAR FALSO
+        FIN SI
+    FIN PARA
+    RETORNAR VERDADERO
+FIN FUNCION
+
+INICIO DEL PROGRAMA PRINCIPAL
+
+    DECLARAR numeros COMO ARRAY DE ENTEROS DE TAMAÑO 100
+    DECLARAR cantidad COMO ENTERO INICIALIZADO A 0
+    DECLARAR numero COMO ENTERO
+
+    MIENTRAS VERDADERO HACER
+        IMPRIMIR "Ingresa un número entero (o escribe -1 para terminar): "
+        LEER numero
+
+        SI numero == -1 ENTONCES
+            ROMPER
+        FIN SI
+
+        numeros[cantidad] = numero
+        cantidad = cantidad + 1
+
+        SI esPrimo(numero) ENTONCES
+            IMPRIMIR "El número " + numero + " es un Número Primo."
+        SINO
+            IMPRIMIR "El número " + numero + " No es un Número Primo."
+        FIN SI
+    FIN MIENTRAS
+
+    SI cantidad == 0 ENTONCES
+        IMPRIMIR "No se ingresaron números."
+        RETORNAR
+    FIN SI
+
+    DECLARAR maxNum COMO ENTERO INICIALIZADO A numeros[0]
+    DECLARAR posMax COMO ENTERO INICIALIZADO A 0
+    DECLARAR sumaPrimos COMO ENTERO INICIALIZADO A 0
+    DECLARAR cantidadPrimos COMO ENTERO INICIALIZADO A 0
+    DECLARAR sumaNoPrimos COMO ENTERO INICIALIZADO A 0
+    DECLARAR cantidadNoPrimos COMO ENTERO INICIALIZADO A 0
+
+    PARA i DESDE 0 HASTA cantidad - 1 HACER
+        SI numeros[i] > maxNum ENTONCES
+            maxNum = numeros[i]
+            posMax = i
+        FIN SI
+
+        SI esPrimo(numeros[i]) ENTONCES
+            sumaPrimos = sumaPrimos + numeros[i]
+            cantidadPrimos = cantidadPrimos + 1
+        SINO
+            sumaNoPrimos = sumaNoPrimos + numeros[i]
+            cantidadNoPrimos = cantidadNoPrimos + 1
+        FIN SI
+    FIN PARA
+
+    DECLARAR promedioPrimos COMO REAL
+    DECLARAR promedioNoPrimos COMO REAL
+
+    SI cantidadPrimos > 0 ENTONCES
+        promedioPrimos = sumaPrimos / cantidadPrimos
+    SINO
+        promedioPrimos = 0
+    FIN SI
+
+    SI cantidadNoPrimos > 0 ENTONCES
+        promedioNoPrimos = sumaNoPrimos / cantidadNoPrimos
+    SINO
+        promedioNoPrimos = 0
+    FIN SI
+
+    IMPRIMIR "Estadísticas:"
+    IMPRIMIR "Número Mayor Ingresado: " + maxNum + " en la posición " + (posMax + 1)
+    IMPRIMIR "Cantidad de Números Primos: " + cantidadPrimos
+    IMPRIMIR "Sumatoria de los Números Primos: " + sumaPrimos
+    IMPRIMIR "Promedio de los Números Primos: " + promedioPrimos
+    IMPRIMIR "Cantidad de Números No Primos: " + cantidadNoPrimos
+    IMPRIMIR "Sumatoria de Números No Primos: " + sumaNoPrimos
+    IMPRIMIR "Promedio de Números No Primos: " + promedioNoPrimos
+
+FIN 

@@ -1,0 +1,88 @@
+INICIO
+
+    DECLARAR tipoCliente, tipoTiquete, cantidad COMO ENTERO
+    DECLARAR montoPorTiquete, montoVenta, descuento, subtotal, impuesto, total COMO REAL
+    DECLARAR cantidadGaleria, cantidadPalco COMO ENTERO INICIALIZADOS A 0
+    DECLARAR acumuladoGaleria, acumuladoPalco, acumuladoGeneral COMO REAL INICIALIZADOS A 0
+    DECLARAR numeroFactura COMO ENTERO INICIALIZADO A 1
+    DECLARAR continuar COMO CARACTER
+
+    HACER
+        // Solicitar datos al usuario
+        IMPRIMIR "Ingrese la cédula del cliente: "
+        LEER cedula
+        IMPRIMIR "Ingrese el nombre del cliente: "
+        LEER nombre
+        IMPRIMIR "Tipo de cliente (1=Niño/Adulto Mayor, 2=Adulto): "
+        LEER tipoCliente
+        IMPRIMIR "Tipo de tiquete (1=Tiquete Galería, 2=Tiquete Palco): "
+        LEER tipoTiquete
+        IMPRIMIR "Cantidad de tiquetes a comprar: "
+        LEER cantidad
+
+        // Determinar monto por tiquete
+        SI tipoTiquete == 1 ENTONCES
+            montoPorTiquete = 6000
+            cantidadGaleria = cantidadGaleria + cantidad
+        SINO
+            montoPorTiquete = 12000
+            cantidadPalco = cantidadPalco + cantidad
+        FIN SI
+
+        // Calcular monto de venta
+        montoVenta = cantidad * montoPorTiquete
+
+        // Calcular descuento
+        SI tipoCliente == 1 ENTONCES // Niño o Adulto Mayor
+            descuento = montoVenta * 0.30
+        SINO // Adulto
+            descuento = 0
+        FIN SI
+
+        // Calcular subtotal, impuesto y total
+        subtotal = montoVenta - descuento
+        impuesto = subtotal * 0.13 // Impuesto del 13%
+        total = subtotal + impuesto
+
+        // Mostrar detalles de la venta
+        IMPRIMIR "Factura No: ", numeroFactura
+        IMPRIMIR "Cédula: ", cedula
+        IMPRIMIR "Nombre: ", nombre
+        IMPRIMIR "Tipo de cliente: ", (tipoCliente == 1 ? "Niño/Adulto Mayor" : "Adulto")
+        IMPRIMIR "Tipo de tiquete: ", (tipoTiquete == 1 ? "Galería" : "Palco")
+        IMPRIMIR "Cantidad de tiquetes: ", cantidad
+        IMPRIMIR "Monto unitario: ", montoPorTiquete
+        IMPRIMIR "Monto de venta: ", montoVenta
+        IMPRIMIR "Descuento: ", descuento
+        IMPRIMIR "Subtotal: ", subtotal
+        IMPRIMIR "Impuesto: ", impuesto
+        IMPRIMIR "Total a pagar: ", total
+
+        // Acumular totales
+        acumuladoGeneral = acumuladoGeneral + total
+        SI tipoTiquete == 1 ENTONCES
+            acumuladoGaleria = acumuladoGaleria + total
+        SINO
+            acumuladoPalco = acumuladoPalco + total
+        FIN SI
+
+        // Incrementar el número de factura
+        numeroFactura = numeroFactura + 1
+
+        // Preguntar si desea continuar
+        IMPRIMIR "¿Desea ingresar otra venta? (s/n): "
+        LEER continuar
+
+    MIENTRAS continuar == 's' O continuar == 'S'
+
+    // Mostrar estadísticas finales
+    IMPRIMIR "Estadísticas finales:"
+    IMPRIMIR "Cantidad de entradas Tiquetes Galería: ", cantidadGaleria
+    IMPRIMIR "Acumulado Dinero por Tiquetes Galería: ", acumuladoGaleria
+    IMPRIMIR "Cantidad de entradas Tiquetes Palco: ", cantidadPalco
+    IMPRIMIR "Acumulado Dinero por Tiquetes Palco: ", acumuladoPalco
+    IMPRIMIR "Cantidad General de Entradas: ", (cantidadGaleria + cantidadPalco)
+    IMPRIMIR "Acumulado General Dinero por Entradas: ", acumuladoGeneral
+    IMPRIMIR "Promedio General por Ventas: ", (numeroFactura > 1 ? (acumuladoGeneral / (numeroFactura - 1)) : 0)
+
+FIN
